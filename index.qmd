@@ -1,0 +1,241 @@
+---
+title: "Data & Exploration"
+---
+
+![](sales_web.png)
+
+An online clothing store has decided to take their marketing strategy to the next level by taking advantage of the available customer activity data. Their aim is to predict potential sales of various collection of high quality fashion brands which will in turn help to reduce marketing cost by making sure that they are spending more on niches and items with high earning potential by offering not only the best prices but also taking advantage of various event, holidays, etc.
+
+#### The Frame of the problem
+
+The outcome variable to predict is the Average sales per customer visit to online store, this means that a regression model will be the best approach in predicting the outcome since sales is a numerical data type. also we have the historical sales amount present in the data which makes this a supervised regression problem.
+
+#### Performance Measure
+
+Model performance will be measured using Root Mean Square Error (RMSE), Mean Absolute Error (MAE) and R squared (coefficient of determination using correlation). NOTE that both RMSE and MAE gives an idea of how much error the model typically makes in its predictions, with a higher weight for large errors.
+
+###### NOTE
+
+<p> 
+The custom functions used in the analysis can be accessed here <a href = "www.mysite.com"><i class="bi bi-file-earmark-code"></i></a>
+</p>
+
+```{r}
+#| include: false
+source("~/R/R_Projects/sales_prediction/web_sales_prediction/functions.R")
+```
+
+### Libraries
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(skimr)
+library(reactable)
+```
+
+## Data
+
+```{r}
+#| message: false
+#| warning: false
+train <- read_delim("data/clothing_store_PCA_training", delim = ",")
+
+display_tibble(head(train, 5))
+```
+
+#### Variable Definition
+
+**days since purchase ::** Number of days after a purchase was made.\
+**purchase visits ::** Number of visit that ended with a purchase.\
+**days in file ::** Total number of days starting from the first purchase date.\
+**days between purchases ::** Average number of days between purchases.\
+**diff items purchased ::** The total number of unique items purchased.\
+**sales per visit ::** Average sales per customer visit.
+
+#### Data Inspection
+
+```{r}
+skimr::skim(train)
+```
+
+There are no missing values in the data (n_missing column) and the average sales per visit is 114.14 which is mostly influenced by the outliers in the data (inline histogram & p50).
+
+### Adding Useful variables
+
+```{r}
+train <- clean_add_variable(train) 
+
+display_tibble(head(train, 5))
+```
+
+## Data Exploration
+
+### Variable Distribution
+
+::: panel-tabset
+## Sales Per visit
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4.5
+numeric_distribution(train, sales_per_visit, type = "plot")
+```
+
+Majority of customers spent less than \$400 for customer visits and there is a huge outlier close to \$2,000. Given this information the MAE will be more preferred for model evaluation since it does not penalize high error caused by outliers unlike RMSE, in other words all error are weighted on the same scale.
+
+## Last Purchase
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4.5
+numeric_distribution(train, days_since_purchase, type = "plot",
+                     p_tl = "Days Since Last Purchase")
+```
+
+The right skewed plot shows that more customers have made purchases recently with a minimum of 1 day and an average of 126. days of course it was influenced by some large outliers by customers who have not made any purchase recently.
+
+## Purchase Visit
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4.5
+numeric_distribution(train, purchase_visits, type = "plot",
+                     p_tl = "Number Of Visits With At least A Purchase")
+```
+
+The number of visit to the online clothing store which lead to at least a purchase shows that majority on an average made a purchase at least 5 times on different visits.
+
+## Length Of Time
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4.5
+numeric_distribution(train, days_on_file, type = "plot",
+                    p_tl = "Total Number Of Days Since Enrollment")
+```
+
+The number of days customers have spent with the store distribution show that majority have spent more time with the business with a maximum of 713 days (almost 2 years) and an average of 438 days.
+
+## Unique Purchased Items
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4.5
+numeric_distribution(train, diff_items_purchased, type = "plot",
+                     p_tl = "Total Number Of Unique Items Purchased")
+```
+
+The median value of unique number of items purchased by customers is 9 items while them maximum is 743 different items which can be somewhat of a bulk purchase.
+:::
+
+### Variable Relationship
+
+::: panel-tabset
+## Sales Per visit
+
+```{r}
+#| echo: false
+#| cache: true
+#| fig-width: 8
+#| fig-height: 4.5
+relationship_plot(train, "sales_per_visit")
+```
+
+The relationship between sales per visit and days since purchase, days on file and days between purchases dose not show any obvious pattern except that there are more low amount of sales than high amount.
+
+While for purchase visit the same pattern as the sales per visit distribution can be seen in the scatter plot.
+
+## Purchase Visit
+
+```{r}
+#| echo: false
+#| cache: true
+#| fig-width: 8
+#| fig-height: 4.5
+relationship_plot(train, "purchase_visits")
+```
+
+There above scatter plots show that:: 1. As the time span since the last purchase increases the number of purchase visit decreases. 2. There is a positive relationship between purchase visit and the number of unique items purchased.
+
+## Unique Purchased Items
+
+```{r}
+#| echo: false
+#| cache: true
+#| fig-width: 8
+#| fig-height: 4.5
+relationship_plot(train, "diff_items_purchased")
+```
+
+## Last Purchase
+
+```{r}
+#| echo: false
+#| cache: true
+#| fig-width: 8
+#| fig-height: 4.5
+relationship_plot(train, "days_since_purchase")
+```
+:::
+
+### Customer Segments
+
+```{r}
+train |>
+  count(customer_segment, sort = TRUE, name = "count") |>
+  mutate(percentage = round(proportions(count)*100, 2)) |>
+  
+  ggplot(aes(x = fct_rev(fct_reorder(customer_segment, count)), y = count)) +
+  geom_col(fill = "#D3AB9E") +
+  geom_text(aes(label = glue::glue("{percentage}%"), vjust = 2),
+            color = "#4A4A4A") +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(x = NULL, y = NULL) +
+  ggtitle("Number of Customer In Each Segment") +
+  theme_minimal() +
+  theme(plot.title = element_text(color = "#888888"),
+        axis.text = element_text(color = "#919191"),
+        plot.background = element_rect(fill = "#FFFBFF",
+                                       color = "#FFFBFF"))
+```
+
+### Customer Segment & Variable Aggregate summary
+
+```{r}
+#| echo: false
+customer_segment_summary_table(train)
+```
+
+### Correlation
+
+```{r}
+train |> 
+  rename_with(axis_label) |>
+  select(where(is.numeric)) |>
+  cor() |>
+  reshape2::melt() |> 
+  ggplot(aes(Var1, Var2, fill = value)) +
+  geom_tile(height = 0.8, width = 0.8) +
+  geom_text(aes(label = round(value, 2)), size = 3, color = "#000000") +
+  scale_fill_gradient2(low = "#E39774", mid = "#EBD8D0", high = "#8B786D") +
+  theme_minimal() +
+  coord_equal() +
+  labs(x = NULL, y = NULL) +
+  theme(axis.text.x = element_text(size = 8, 
+                                   margin = margin(-3, 0, 0, 0),
+                                   angle = 25, 
+                                   hjust = 1),
+        axis.text.y = element_text(size = 8, 
+                                   margin = margin(0, -3, 0, 0)),
+        panel.grid.major = element_blank())
+
+```
+
+The number of unique items purchased is highly correlated with purchase visits also days between purchase is moderately correlated with number of days since purchase.

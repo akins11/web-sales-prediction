@@ -1,0 +1,9 @@
+file: sales_random_forest.rds
+file_size: 16349075
+pin_hash: 314fffd7b4c15e00
+type: rds
+title: 'sales_random_forest: a pinned list'
+description: A ranger regression modeling workflow
+created: 20221006T094706Z
+api_version: 1.0
+user: []

@@ -1,0 +1,41 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Clothing Web Sales Prediction"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Exploration
+      - href: model_page.qmd
+        text: Sales Prediction
+    right: 
+      - icon: github
+        href: https://github.com/
+        aria-label: GitHub
+    background: "#D3AB9E"
+    foreground: dark
+  page-navigation: true
+  page-footer:
+    background: dark
+    left: "Ayomide Akinwande. September, 2022"
+    right: 
+      - icon: github
+        href: https://github.com
+      - icon: twitter
+        href: https://twitter.com
+
+format:
+  html:
+    theme: 
+      - materia
+    css: styles.css
+    toc: true
+    toc-title: "Table Of Content"
+    backgroundcolor: "#FEFEFF"
+    page-layout: full
+    fig-align: center
+  
+editor: source
+

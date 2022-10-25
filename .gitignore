@@ -37,3 +37,13 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+.Rproj.user
+.Rhistory
+
+
+.DS_Store
+
+/.quarto/
+
+/_site/

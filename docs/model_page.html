@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.149">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Clothing Web Sales Prediction - Web Sales Prediction</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<script src="site_libs/core-js-2.5.3/shim.min.js"></script>
+<script src="site_libs/react-17.0.0/react.min.js"></script>
+<script src="site_libs/react-17.0.0/react-dom.min.js"></script>
+<script src="site_libs/reactwidget-1.0.0/react-tools.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/reactable-binding-0.3.0/reactable.js"></script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Clothing Web Sales Prediction</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Exploration</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./model_page.html" aria-current="page">Sales Prediction</a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table Of Content</h2>
+   
+  <ul>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link active" data-scroll-target="#feature-engineering">Feature Engineering</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model">Model</a></li>
+  <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow">Workflow</a></li>
+  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation">Cross Validation</a></li>
+  <li><a href="#hyper-parameter-tuning" id="toc-hyper-parameter-tuning" class="nav-link" data-scroll-target="#hyper-parameter-tuning">hyper-parameter tuning</a></li>
+  <li><a href="#feature-importance" id="toc-feature-importance" class="nav-link" data-scroll-target="#feature-importance">Feature Importance</a></li>
+  <li><a href="#finalize-workflow" id="toc-finalize-workflow" class="nav-link" data-scroll-target="#finalize-workflow">Finalize workflow</a></li>
+  <li><a href="#fit-predict" id="toc-fit-predict" class="nav-link" data-scroll-target="#fit-predict">Fit &amp; Predict</a></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
+  <li><a href="#save-final-model" id="toc-save-final-model" class="nav-link" data-scroll-target="#save-final-model">Save Final Model</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Web Sales Prediction</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="libraries" class="level4">
+<h4 class="anchored" data-anchor-id="libraries">Libraries</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="feature-engineering" class="level3">
+<h3 class="anchored" data-anchor-id="feature-engineering">Feature Engineering</h3>
+<p>Feature Scaling will be performed in order to transform numerical attributes to be on similar scales.</p>
+<p>Since most Machine Learning algorithms prefer to work with numbers, we will convert the customer segment categories from text to numbers.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m_res <span class="ot">&lt;-</span> <span class="fu">recipe</span>(sales_per_visit <span class="sc">~</span> ., <span class="at">data =</span> train) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>())</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>m_res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Recipe
+
+Inputs:
+
+      role #variables
+   outcome          1
+ predictor          7
+
+Operations:
+
+Centering and scaling for all_numeric_predictors()
+Dummy variables from all_nominal_predictors()</code></pre>
+</div>
+</div>
+</section>
+<section id="model" class="level3">
+<h3 class="anchored" data-anchor-id="model">Model</h3>
+<p>Three model will be trained and evaluated to see which of them will have the best potential at generalizing well on the test set this models are linear regression, decision tree and a random forest model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lr_mdl <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>dt_mdl <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>rf_mdl <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="workflow" class="level3">
+<h3 class="anchored" data-anchor-id="workflow">Workflow</h3>
+<p>Creating a workflow pipeline which combines both feature engineering and the model specification together. this will be done for each model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lr_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(m_res) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(lr_mdl)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>dt_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(m_res) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(dt_mdl)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(m_res) <span class="sc">|&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_mdl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cross-validation" class="level3">
+<h3 class="anchored" data-anchor-id="cross-validation">Cross Validation</h3>
+<p>In order to better evaluate the model performance the training set will be divided further into smaller training set and a validation set, the models will then be trained against the smaller training set and evaluate them against the validation set. Note that there will be 10 separate folds (train set &amp; validation set) and split will be done using a stratified sampling based on the newly created customer segment variable so that each set will have a random sample close to that of the population (the entire train set)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1122</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>v_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(train, <span class="at">v =</span> <span class="dv">10</span>, <span class="at">strata =</span> <span class="st">"customer_segment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="linear-regression" class="level5">
+<h5 class="anchored" data-anchor-id="linear-regression">Linear Regression</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>lr_fit <span class="ot">&lt;-</span> lr_wf <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> v_folds,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse, rsq, mae),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">control =</span> <span class="fu">control_resamples</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(lr_fit) <span class="sc">|&gt;</span> <span class="fu">cross_valid_tibble</span>(<span class="at">model =</span> <span class="st">"default"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="htmlwidget-3f02ce593b980866f820" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-3f02ce593b980866f820">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".metric":["mae","rmse","rsq"],".estimator":["standard","standard","standard"],"mean":[35.8238592367184,62.195931028808,0.500535936698268],"n":[10,10,10],"std_err":[0.411543898331294,2.0366147268898,0.0107349599449448],".config":["Preprocessor1_Model1","Preprocessor1_Model1","Preprocessor1_Model1"]},"columns":[{"accessor":".metric","name":".metric","type":"character"},{"accessor":".estimator","name":".estimator","type":"character"},{"accessor":"mean","name":"mean","type":"numeric","format":{"cell":{"digits":3},"aggregated":{"digits":3}}},{"accessor":"n","name":"n","type":"numeric"},{"accessor":"std_err","name":"std_err","type":"numeric","format":{"cell":{"digits":4},"aggregated":{"digits":4}}},{"accessor":".config","name":".config","type":"character"}],"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"theme":{"color":"#8A8A8A","headerStyle":{"color":"#777777","fontSize":"17px"}},"dataKey":"25b5d2a11e956db42babf483cd9ce49d"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="decision-tree" class="level5">
+<h5 class="anchored" data-anchor-id="decision-tree">Decision Tree</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dt_fit <span class="ot">&lt;-</span> dt_wf <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> v_folds,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse, rsq, mae),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">control =</span> <span class="fu">control_resamples</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(dt_fit) <span class="sc">|&gt;</span> <span class="fu">cross_valid_tibble</span>(<span class="at">model =</span> <span class="st">"default"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="htmlwidget-8333293b9c5e161fb726" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8333293b9c5e161fb726">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".metric":["mae","rmse","rsq"],".estimator":["standard","standard","standard"],"mean":[34.7976686034466,58.134960228096,0.565525153895856],"n":[10,10,10],"std_err":[0.391127737222107,1.86396864663079,0.0145938278385036],".config":["Preprocessor1_Model1","Preprocessor1_Model1","Preprocessor1_Model1"]},"columns":[{"accessor":".metric","name":".metric","type":"character"},{"accessor":".estimator","name":".estimator","type":"character"},{"accessor":"mean","name":"mean","type":"numeric","format":{"cell":{"digits":3},"aggregated":{"digits":3}}},{"accessor":"n","name":"n","type":"numeric"},{"accessor":"std_err","name":"std_err","type":"numeric","format":{"cell":{"digits":4},"aggregated":{"digits":4}}},{"accessor":".config","name":".config","type":"character"}],"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"theme":{"color":"#8A8A8A","headerStyle":{"color":"#777777","fontSize":"17px"}},"dataKey":"477ca192848c9011796d59ae1c078a83"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="random-forest" class="level5">
+<h5 class="anchored" data-anchor-id="random-forest">Random Forest</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> rf_wf <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> v_folds,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse, rsq, mae),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">control =</span> <span class="fu">control_resamples</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(rf_fit) <span class="sc">|&gt;</span> <span class="fu">cross_valid_tibble</span>(<span class="at">model =</span> <span class="st">"default"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="htmlwidget-2ec190c5ec25d8c0d1ca" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2ec190c5ec25d8c0d1ca">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".metric":["mae","rmse","rsq"],".estimator":["standard","standard","standard"],"mean":[22.1885821594391,46.035508000823,0.741212578962579],"n":[10,10,10],"std_err":[0.313531344827163,2.1839100585051,0.0136598855906548],".config":["Preprocessor1_Model1","Preprocessor1_Model1","Preprocessor1_Model1"]},"columns":[{"accessor":".metric","name":".metric","type":"character"},{"accessor":".estimator","name":".estimator","type":"character"},{"accessor":"mean","name":"mean","type":"numeric","format":{"cell":{"digits":3},"aggregated":{"digits":3}}},{"accessor":"n","name":"n","type":"numeric"},{"accessor":"std_err","name":"std_err","type":"numeric","format":{"cell":{"digits":4},"aggregated":{"digits":4}}},{"accessor":".config","name":".config","type":"character"}],"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"theme":{"color":"#8A8A8A","headerStyle":{"color":"#777777","fontSize":"17px"}},"dataKey":"9b2fa188d1ff853fc5f865b57688fb92"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br></p>
+<p>Evaluating the performance of the three models we can see that the random forest model made the least error when predicting sales per visit with RMSE of 46.0 and MAE of 22.2 way better than decision tree with RMSE of 58.1 and MAE of 34.8 linear regression performed worst of all three models.</p>
+</section>
+</section>
+<section id="hyper-parameter-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="hyper-parameter-tuning">hyper-parameter tuning</h3>
+<p>The model performance can be improved further by feeding the best parameter to the model. A grid search will be used to save time and reduce errors.</p>
+<section id="creating-a-new-tunable-model-for-both-decision-tree-and-random-forest-model." class="level4">
+<h4 class="anchored" data-anchor-id="creating-a-new-tunable-model-for-both-decision-tree-and-random-forest-model.">Creating a new tunable model for both decision tree and random forest model.</h4>
+<p><br></p>
+<section id="decision-tree-1" class="level5">
+<h5 class="anchored" data-anchor-id="decision-tree-1">Decision Tree</h5>
+<p>Experimenting on three decision tree hyperparameters which are::<br>
+<strong>cost complexity :-</strong> the cost parameter (cp) used by CART model.<br>
+<strong>tree depth :-</strong> The maximum depth of the decision tree.<br>
+<strong>min n :-</strong> The minimum number of data points required for a node to be split further.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dt_t_mdl <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>(<span class="at">cost_complexity =</span> <span class="fu">tune</span>(),</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Update workflow model</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>dt_wf <span class="ot">&lt;-</span> <span class="fu">update_model</span>(dt_wf, dt_t_mdl)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1221</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>()</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>dt_tune <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(dt_wf,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">resamples =</span> v_folds,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">grid =</span> <span class="dv">10</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Grid Perfomance</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Best Parameters</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(dt_tune) <span class="sc">|&gt;</span> <span class="fu">cross_valid_tibble</span>(<span class="st">"dt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="htmlwidget-c2c119e7026f83a29e2b" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c2c119e7026f83a29e2b">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cost_complexity":[4.9556194097162e-05,2.45912724832041e-05,2.00609499537748e-08,4.64756050753788e-10,0.00162875035646545,3.04890754761861e-07,0.000262022316088527,5.1602531965902e-09,0.0769185531442271,2.58103718169264e-06],"tree_depth":[8,11,12,4,9,5,14,11,2,5],"min_n":[25,14,37,30,11,9,36,5,24,20],".metric":["mae","mae","mae","mae","mae","mae","mae","mae","mae","mae"],".estimator":["standard","standard","standard","standard","standard","standard","standard","standard","standard","standard"],"mean":[22.6784714876743,21.8185034406927,21.6155856023372,38.6253899031624,25.7946945131799,33.1940700228656,21.627711661363,22.543365990689,52.6247584347443,33.2352414880952],"n":[10,10,10,10,10,10,10,10,10,10],"std_err":[0.28826942619774,0.343218770986545,0.309571473030851,0.448294581233723,0.298029503114172,0.412870106655089,0.327736128355132,0.326357257039836,0.415417921843974,0.407352073873473],".config":["Preprocessor1_Model01","Preprocessor1_Model02","Preprocessor1_Model03","Preprocessor1_Model04","Preprocessor1_Model05","Preprocessor1_Model06","Preprocessor1_Model07","Preprocessor1_Model08","Preprocessor1_Model09","Preprocessor1_Model10"]},"columns":[{"accessor":"cost_complexity","name":"cost_complexity","type":"numeric","format":{"cell":{"digits":5},"aggregated":{"digits":5}}},{"accessor":"tree_depth","name":"tree_depth","type":"numeric"},{"accessor":"min_n","name":"min_n","type":"numeric"},{"accessor":".metric","name":".metric","type":"character"},{"accessor":".estimator","name":".estimator","type":"character"},{"accessor":"mean","name":"mean","type":"numeric","format":{"cell":{"digits":3},"aggregated":{"digits":3}}},{"accessor":"n","name":"n","type":"numeric"},{"accessor":"std_err","name":"std_err","type":"numeric","format":{"cell":{"digits":4},"aggregated":{"digits":4}}},{"accessor":".config","name":".config","type":"character"}],"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"theme":{"color":"#8A8A8A","headerStyle":{"color":"#777777","fontSize":"17px"}},"dataKey":"5d7d4417796f2f13e3ecdc2629e09218"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_best</span>(dt_tune, <span class="at">metric =</span> <span class="st">"mae"</span>) <span class="sc">|&gt;</span> <span class="fu">cross_valid_tibble</span>(<span class="st">"dt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="htmlwidget-b2e9c029aee0b34db4b3" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b2e9c029aee0b34db4b3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"cost_complexity":[2.00609499537748e-08,0.000262022316088527,2.45912724832041e-05,5.1602531965902e-09,4.9556194097162e-05],"tree_depth":[12,14,11,11,8],"min_n":[37,36,14,5,25],".metric":["mae","mae","mae","mae","mae"],".estimator":["standard","standard","standard","standard","standard"],"mean":[21.6155856023372,21.627711661363,21.8185034406927,22.543365990689,22.6784714876743],"n":[10,10,10,10,10],"std_err":[0.309571473030851,0.327736128355132,0.343218770986545,0.326357257039836,0.28826942619774],".config":["Preprocessor1_Model03","Preprocessor1_Model07","Preprocessor1_Model02","Preprocessor1_Model08","Preprocessor1_Model01"]},"columns":[{"accessor":"cost_complexity","name":"cost_complexity","type":"numeric","format":{"cell":{"digits":5},"aggregated":{"digits":5}}},{"accessor":"tree_depth","name":"tree_depth","type":"numeric"},{"accessor":"min_n","name":"min_n","type":"numeric"},{"accessor":".metric","name":".metric","type":"character"},{"accessor":".estimator","name":".estimator","type":"character"},{"accessor":"mean","name":"mean","type":"numeric","format":{"cell":{"digits":3},"aggregated":{"digits":3}}},{"accessor":"n","name":"n","type":"numeric"},{"accessor":"std_err","name":"std_err","type":"numeric","format":{"cell":{"digits":4},"aggregated":{"digits":4}}},{"accessor":".config","name":".config","type":"character"}],"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"theme":{"color":"#8A8A8A","headerStyle":{"color":"#777777","fontSize":"17px"}},"dataKey":"20b3b6fc6aef3fd30fc146bee74f50c2"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(dt_tune) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="model_page_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Based on the average MAE of all 10 split there is an increase in the model performance of which there is a reduction in the prediction error from 33.4 down to 20.1. let’s see how the random forest model performs.</p>
+<p><br></p>
+</section>
+<section id="random-forest-1" class="level5">
+<h5 class="anchored" data-anchor-id="random-forest-1">Random Forest</h5>
+<p>Experimenting on two random forest hyperparameters which are::<br>
+<strong>mtry :-</strong> Number of predictors that will be randomly sampled at each split when creating the tree model.<br>
+<strong>min_n :-</strong> The minimum number of data points required for a node to be split further.</p>
+<div class="cell" data-hash="model_page_cache/html/unnamed-chunk-14_b83419eec5d03d7519836137b749dded">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rf_t_mdl <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(<span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">trees =</span> <span class="dv">1000</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Update workflow model</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">update_model</span>(rf_wf, rf_t_mdl)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1221</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>()</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>rf_tune <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(rf_wf,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">resamples =</span> v_folds,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">grid =</span> <span class="dv">5</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>i Creating pre-processing data to finalize unknown parameter: mtry</code></pre>
+</div>
+</div>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Grid Perfomance</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Best Parameters</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(rf_tune) <span class="sc">|&gt;</span> <span class="fu">cross_valid_tibble</span>(<span class="st">"rf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="htmlwidget-6b43f224649918bb4310" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6b43f224649918bb4310">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"mtry":[6,5,7,3,1],"min_n":[9,11,32,39,24],".metric":["mae","mae","mae","mae","mae"],".estimator":["standard","standard","standard","standard","standard"],"mean":[20.803593887202,20.6483600993287,20.418406088529,20.6798007972331,35.5880902303103],"n":[10,10,10,10,10],"std_err":[0.304611888550278,0.298346372367573,0.309271282337425,0.293386798735694,0.44454905397957],".config":["Preprocessor1_Model1","Preprocessor1_Model2","Preprocessor1_Model3","Preprocessor1_Model4","Preprocessor1_Model5"]},"columns":[{"accessor":"mtry","name":"mtry","type":"numeric"},{"accessor":"min_n","name":"min_n","type":"numeric"},{"accessor":".metric","name":".metric","type":"character"},{"accessor":".estimator","name":".estimator","type":"character"},{"accessor":"mean","name":"mean","type":"numeric","format":{"cell":{"digits":3},"aggregated":{"digits":3}}},{"accessor":"n","name":"n","type":"numeric"},{"accessor":"std_err","name":"std_err","type":"numeric","format":{"cell":{"digits":4},"aggregated":{"digits":4}}},{"accessor":".config","name":".config","type":"character"}],"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"theme":{"color":"#8A8A8A","headerStyle":{"color":"#777777","fontSize":"17px"}},"dataKey":"9f07c59a8dceeb5ca8dc9088fa95eb55"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_best</span>(rf_tune, <span class="at">metric =</span> <span class="st">"mae"</span>) <span class="sc">|&gt;</span> <span class="fu">cross_valid_tibble</span>(<span class="st">"rf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="htmlwidget-97e5086f5eabb616d998" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-97e5086f5eabb616d998">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"mtry":[7,5,3,6,1],"min_n":[32,11,39,9,24],".metric":["mae","mae","mae","mae","mae"],".estimator":["standard","standard","standard","standard","standard"],"mean":[20.418406088529,20.6483600993287,20.6798007972331,20.803593887202,35.5880902303103],"n":[10,10,10,10,10],"std_err":[0.309271282337425,0.298346372367573,0.293386798735694,0.304611888550278,0.44454905397957],".config":["Preprocessor1_Model3","Preprocessor1_Model2","Preprocessor1_Model4","Preprocessor1_Model1","Preprocessor1_Model5"]},"columns":[{"accessor":"mtry","name":"mtry","type":"numeric"},{"accessor":"min_n","name":"min_n","type":"numeric"},{"accessor":".metric","name":".metric","type":"character"},{"accessor":".estimator","name":".estimator","type":"character"},{"accessor":"mean","name":"mean","type":"numeric","format":{"cell":{"digits":3},"aggregated":{"digits":3}}},{"accessor":"n","name":"n","type":"numeric"},{"accessor":"std_err","name":"std_err","type":"numeric","format":{"cell":{"digits":4},"aggregated":{"digits":4}}},{"accessor":".config","name":".config","type":"character"}],"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"theme":{"color":"#8A8A8A","headerStyle":{"color":"#777777","fontSize":"17px"}},"dataKey":"73d103bed08b838bdae1981b08e737b4"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(rf_tune) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="model_page_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The tunned random forest model have the best performance so far, with the lowest error of 20.4 on an average for all 10 split.</p>
+</section>
+</section>
+</section>
+<section id="feature-importance" class="level3">
+<h3 class="anchored" data-anchor-id="feature-importance">Feature Importance</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>imp_spec <span class="ot">&lt;-</span> rf_mdl <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_model</span>(<span class="fu">select_best</span>(rf_tune, <span class="at">metric =</span> <span class="st">"mae"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>, <span class="at">importance =</span> <span class="st">"permutation"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(m_res) <span class="sc">|&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(imp_spec) <span class="sc">|&gt;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train) <span class="sc">|&gt;</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vip</span>(<span class="at">aesthetics =</span> <span class="fu">list</span>(<span class="at">alpha =</span> <span class="fl">0.9</span>, <span class="at">fill =</span> <span class="st">"#D3AB9E"</span>)) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Feature Importance"</span>) <span class="sc">+</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>()) <span class="sc">+</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#888888"</span>),</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#8F8F8F"</span>),</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#8F8F8F"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="model_page_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The number of visit from customers which involved a least a purchase is the most important variable when predicting sales per visit which is closely followed by the number of unique items purchased while the dummy variables for customer segment have the smallest contribution when predicting sales per visit.</p>
+</section>
+<section id="finalize-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="finalize-workflow">Finalize workflow</h3>
+<p>Going forward the random forest will be used to predict sales per visit on the test set to see how well the model generalizes.</p>
+<section id="load-testing-data" class="level4">
+<h4 class="anchored" data-anchor-id="load-testing-data">Load Testing data</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_delim</span>(<span class="st">"data/clothing_store_PCA_test"</span>, <span class="at">delim =</span> <span class="st">","</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_add_variable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>final_rf <span class="ot">&lt;-</span> rf_wf <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(rf_tune, <span class="at">metric =</span> <span class="st">"mae"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="fit-predict" class="level3">
+<h3 class="anchored" data-anchor-id="fit-predict">Fit &amp; Predict</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean and add variables to the test set</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">clean_add_variable</span>(test)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>fit_workflow <span class="ot">&lt;-</span> <span class="fu">fit</span>(final_rf, train)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>sales_prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_workflow, test)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>pred_df <span class="ot">&lt;-</span> sales_prediction <span class="sc">|&gt;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">actual =</span> test<span class="sc">$</span>sales_per_visit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="evaluation">Evaluation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mae</span>(pred_df, <span class="at">truth =</span> actual, <span class="at">estimate =</span> .pred) <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reactable</span>(</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">reactableTheme</span>(<span class="at">color =</span> <span class="st">"#919191"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">headerStyle =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"#858585"</span>)),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">list</span>(<span class="at">.estimate =</span> <span class="fu">colDef</span>(<span class="at">format =</span> <span class="fu">colFormat</span>(<span class="at">digits =</span> <span class="dv">3</span>))),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">bordered =</span> <span class="cn">TRUE</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="htmlwidget-734e451367a068dca587" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-734e451367a068dca587">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".metric":["mae"],".estimator":["standard"],".estimate":[20.5200649984024]},"columns":[{"accessor":".metric","name":".metric","type":"character"},{"accessor":".estimator","name":".estimator","type":"character"},{"accessor":".estimate","name":".estimate","type":"numeric","format":{"cell":{"digits":3},"aggregated":{"digits":3}}}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"theme":{"color":"#919191","headerStyle":{"color":"#858585"}},"dataKey":"2333fe9c5e7444e095da3a6cde36a1aa"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">numeric_summary</span>(pred_df, .pred, <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">"Prediction"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">numeric_summary</span>(pred_df, actual, <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="st">"Actual"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(variable, <span class="at">.before =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span><span class="fu">round</span>(.x, <span class="dv">2</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(axis_label) <span class="sc">|&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reactable</span>(</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">reactableTheme</span>(<span class="at">color =</span> <span class="st">"#919191"</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>                           <span class="at">headerStyle =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"#858585"</span>)),</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultColDef =</span> <span class="fu">colDef</span>(<span class="at">format =</span> <span class="fu">colFormat</span>(<span class="at">separators =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>                                              <span class="at">prefix =</span> <span class="st">"$"</span>)),</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">list</span>(</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">Variable =</span> <span class="fu">colDef</span>(<span class="at">style =</span> <span class="fu">list</span>(<span class="at">color =</span> <span class="st">"#777777"</span>,</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">fontWeight =</span> <span class="st">"bold"</span>),</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">format =</span> <span class="fu">colFormat</span>(<span class="at">prefix =</span> <span class="cn">NULL</span>))</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="htmlwidget-c10b885f6b35a391a9e3" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c10b885f6b35a391a9e3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Variable":["Prediction","Actual"],"Minimum":[20.73,0.5],"Q25":[69.47,61.09],"Mean":[113.91,113.02],"Median":[103.1,92],"Q75":[160.4,139.5],"Maximum":[719.46,1725.85],"Sum":[1617156.23,1604598.77]},"columns":[{"accessor":"Variable","name":"Variable","type":"character","format":{"cell":{},"aggregated":{}},"style":{"color":"#777777","fontWeight":"bold"}},{"accessor":"Minimum","name":"Minimum","type":"numeric","format":{"cell":{"prefix":"$","separators":true},"aggregated":{"prefix":"$","separators":true}}},{"accessor":"Q25","name":"Q25","type":"numeric","format":{"cell":{"prefix":"$","separators":true},"aggregated":{"prefix":"$","separators":true}}},{"accessor":"Mean","name":"Mean","type":"numeric","format":{"cell":{"prefix":"$","separators":true},"aggregated":{"prefix":"$","separators":true}}},{"accessor":"Median","name":"Median","type":"numeric","format":{"cell":{"prefix":"$","separators":true},"aggregated":{"prefix":"$","separators":true}}},{"accessor":"Q75","name":"Q75","type":"numeric","format":{"cell":{"prefix":"$","separators":true},"aggregated":{"prefix":"$","separators":true}}},{"accessor":"Maximum","name":"Maximum","type":"numeric","format":{"cell":{"prefix":"$","separators":true},"aggregated":{"prefix":"$","separators":true}}},{"accessor":"Sum","name":"Sum","type":"numeric","format":{"cell":{"prefix":"$","separators":true},"aggregated":{"prefix":"$","separators":true}}}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"theme":{"color":"#919191","headerStyle":{"color":"#858585"}},"dataKey":"0766ea3952d24c22ad5103a95de7910e"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="cell" data-hash="model_page_cache/html/unnamed-chunk-24_5f13ec45db912eb258aba77ca9cbf4fc">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pred_df <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(actual, .pred)) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#D3AB9E"</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#D3AB9E"</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>()) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>()) <span class="sc">+</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Actual"</span>, <span class="at">y =</span> <span class="st">"Prediction"</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Actual Vs Predicted Sales Per Visit"</span>) <span class="sc">+</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#5E5E5E"</span>),</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#5E5E5E"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="model_page_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Prediction on the test set have a Mean Absolute Error of 20.5 which mean the final random forest model is not over fitting the data. Also from the scatter plot above there is a certain pattern of error for the actual and predicted sales per visit which shows smaller errors for sales below $300 and a higher error for sales above that amount. Another obvious error the model made is failing to predict sales per visit above $716.9.</p>
+</section>
+<section id="save-final-model" class="level3">
+<h3 class="anchored" data-anchor-id="save-final-model">Save Final Model</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mdl_v <span class="ot">&lt;-</span> vetiver<span class="sc">::</span><span class="fu">vetiver_model</span>(<span class="at">model =</span> fit_workflow,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">model_name =</span> <span class="st">"sales_random_forest"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>model_board <span class="ot">&lt;-</span> pins<span class="sc">::</span><span class="fu">board_folder</span>(<span class="at">path =</span> <span class="st">"model_workflow"</span>, <span class="at">versioned =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>vetiver<span class="sc">::</span><span class="fu">vetiver_pin_write</span>(model_board, mdl_v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="function-for-future-prediction-of-sales-per-visit." class="level4">
+<h4 class="anchored" data-anchor-id="function-for-future-prediction-of-sales-per-visit.">Function for future prediction of sales per visit.</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Predict Sales per visit on new set of records.</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param board_path path to the saved pin board.</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param mdl_version The model version.</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param new_data  A new data set to predict.</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return A tibble with a single variable ".pred" which holds the new predictions of sales per visit.</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples predict_sale_per_visit("~/sales_prediction/board", new_web_records)</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>predict_sale_per_visit <span class="ot">&lt;-</span> <span class="cf">function</span>(board_path, mdl_version, new_data) {</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  model_board <span class="ot">&lt;-</span> pins<span class="sc">::</span><span class="fu">board_folder</span>(<span class="at">path =</span> board_path)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  vers <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="sc">!</span><span class="fu">missing</span>(mdl_version)) mdl_version <span class="cf">else</span> <span class="cn">NULL</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  wf_model <span class="ot">&lt;-</span> vetiver<span class="sc">::</span><span class="fu">vetiver_pin_read</span>(<span class="at">board =</span> model_board, </span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">name =</span> <span class="st">"sales_random_forest"</span>,</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">version =</span> vers)</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(workflows)</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(wf_model, new_data)</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Ayomide Akinwande. September, 2022</div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>
